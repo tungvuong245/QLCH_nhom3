@@ -9,9 +9,8 @@ import android.view.Window;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import com.example.qlch.databinding.ActivityMainBinding;
-import com.example.qlch.home.fragment.HomeFragment;
+import com.example.qlch.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;

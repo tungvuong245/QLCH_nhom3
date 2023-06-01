@@ -1,6 +1,7 @@
 package com.example.qlch.base;
 
-import com.example.duan1_mananger.model.Table;
+
+import com.example.qlch.model.Table;
 
 public interface OnclickOptionMenu {
     void onClick(Table table);

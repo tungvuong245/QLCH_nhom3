@@ -1,4 +1,4 @@
-package com.example.qlch.home.fragment;
+package com.example.qlch.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,8 +8,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 
 import com.example.qlch.R;
@@ -26,13 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.text.DateFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 public class HomeFragment extends BaseFragment {  // nho implement onClickk
     // nho implement onClickk
@@ -113,7 +107,7 @@ public class HomeFragment extends BaseFragment {  // nho implement onClickk
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 user = snapshot.getValue(User.class);
                 if (firebaseUser != null) {
-                    binding.tvName.setText(user.getName_user());
+//                    binding.tvName.setText(user.getName_user());
                 }
             }
 
@@ -174,11 +168,11 @@ public class HomeFragment extends BaseFragment {  // nho implement onClickk
 
     @Override
     public void listening() {
-        binding.icCloseSlide.setOnClickListener(ic ->{
-            binding.layoutSlide.setVisibility(View.GONE);
+//        binding.icCloseSlide.setOnClickListener(ic ->{
+//            binding.layoutSlide.setVisibility(View.GONE);
 
-        });
-        selectTabFragment();
+//        });
+//        selectTabFragment();
 //        binding.icUserSetting.setOnClickListener(ic ->{
 //            replaceFragment(new UpdateUserFragment().newInstance(user));
 //        });
@@ -194,34 +188,34 @@ public class HomeFragment extends BaseFragment {  // nho implement onClickk
 
     @Override
     public void initView() {
-        binding.tvTitleAll.setBackgroundColor(getContext().getColor(R.color.red_100));
+//        binding.tvTitleAll.setBackgroundColor(getContext().getColor(R.color.red_100));
 //        getAllTable();
     }
 
 
 
-    private void selectTabFragment(){
-        binding.btnAllTable.setOnClickListener(btn ->{
-            changeBgColorTextView(binding.tvTitleAll,getContext().getColor(R.color.red_100));
-            changeBgColorTextView(binding.tvTitleEmpty,getContext().getColor(R.color.grey_55));
-            changeBgColorTextView(binding.tvTitleOpen,getContext().getColor(R.color.grey_55));
-//            getAllTable();
-        });
-        binding.btnTableEmpty.setOnClickListener(btn ->{
-            changeBgColorTextView(binding.tvTitleAll,getContext().getColor(R.color.grey_55));
-            changeBgColorTextView(binding.tvTitleEmpty,getContext().getColor(R.color.red_100));
-            changeBgColorTextView(binding.tvTitleOpen,getContext().getColor(R.color.grey_55));
-//            getTable("false");
-        });
-
-        binding.btnTableOpen.setOnClickListener(btn ->{
-            changeBgColorTextView(binding.tvTitleAll,getContext().getColor(R.color.grey_55));
-            changeBgColorTextView(binding.tvTitleEmpty,getContext().getColor(R.color.grey_55));
-            changeBgColorTextView(binding.tvTitleOpen,getContext().getColor(R.color.red_100));
-//            getTable("true");
-
-        });
-    }
+//    private void selectTabFragment(){
+////        binding.btnAllTable.setOnClickListener(btn ->{
+////            changeBgColorTextView(binding.tvTitleAll,getContext().getColor(R.color.red_100));
+////            changeBgColorTextView(binding.tvTitleEmpty,getContext().getColor(R.color.grey_55));
+////            changeBgColorTextView(binding.tvTitleOpen,getContext().getColor(R.color.grey_55));
+////            getAllTable();
+//        });
+//        binding.btnTableEmpty.setOnClickListener(btn ->{
+//            changeBgColorTextView(binding.tvTitleAll,getContext().getColor(R.color.grey_55));
+//            changeBgColorTextView(binding.tvTitleEmpty,getContext().getColor(R.color.red_100));
+//            changeBgColorTextView(binding.tvTitleOpen,getContext().getColor(R.color.grey_55));
+////            getTable("false");
+//        });
+//
+//        binding.btnTableOpen.setOnClickListener(btn ->{
+//            changeBgColorTextView(binding.tvTitleAll,getContext().getColor(R.color.grey_55));
+//            changeBgColorTextView(binding.tvTitleEmpty,getContext().getColor(R.color.grey_55));
+//            changeBgColorTextView(binding.tvTitleOpen,getContext().getColor(R.color.red_100));
+////            getTable("true");
+//
+//        });
+//    }
 
 
     private void changeBgColorTextView( TextView tv ,int idColor){
