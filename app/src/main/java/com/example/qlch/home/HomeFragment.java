@@ -12,8 +12,13 @@ import androidx.annotation.Nullable;
 
 import com.example.qlch.R;
 import com.example.qlch.base.BaseFragment;
+import com.example.qlch.base.OnclickOptionMenu;
 import com.example.qlch.databinding.FragmentHomeBinding;
+import com.example.qlch.model.Table;
 import com.example.qlch.model.User;
+import com.example.qlch.setting.UpdateUserFragment;
+import com.example.qlch.table.DetailTableFragment;
+import com.example.qlch.table.adapter.TableAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,21 +30,24 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
-public class HomeFragment extends BaseFragment {  // nho implement onClickk
+public class HomeFragment extends BaseFragment implements OnclickOptionMenu {  // nho implement onClickk
     // nho implement onClickk
     // nho implement onClickk
     // nho implement onClickk
+
    private FragmentHomeBinding binding;
    private User user;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
 //    private SettingViewModel viewModel;
-//    private TableAdapter adapter = null;
+    private TableAdapter adapter = null;
     private FirebaseDatabase database;
-//    private List<Table> listTable;
+    private List<Table> listTable;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -168,17 +176,17 @@ public class HomeFragment extends BaseFragment {  // nho implement onClickk
 
     @Override
     public void listening() {
-//        binding.icCloseSlide.setOnClickListener(ic ->{
-//            binding.layoutSlide.setVisibility(View.GONE);
+        binding.icCloseSlide.setOnClickListener(ic ->{
+            binding.layoutSlide.setVisibility(View.GONE);
 
-//        });
-//        selectTabFragment();
-//        binding.icUserSetting.setOnClickListener(ic ->{
-//            replaceFragment(new UpdateUserFragment().newInstance(user));
-//        });
-//        binding.tvShowDetailsTurnover.setOnClickListener(tv ->{
+        });
+        selectTabFragment();
+        binding.icUserSetting.setOnClickListener(ic ->{
+            replaceFragment(new UpdateUserFragment().newInstance(user));
+        });
+        binding.tvShowDetailsTurnover.setOnClickListener(tv ->{
 //            replaceFragment(DailySalesReportFragment.newInstance());
-//        });
+        });
     }
 
     @Override
@@ -188,100 +196,102 @@ public class HomeFragment extends BaseFragment {  // nho implement onClickk
 
     @Override
     public void initView() {
-//        binding.tvTitleAll.setBackgroundColor(getContext().getColor(R.color.red_100));
-//        getAllTable();
+       binding.tvTitleAll.setBackgroundColor(getContext().getColor(R.color.red_100));
+       getAllTable();
     }
 
 
 
-//    private void selectTabFragment(){
-////        binding.btnAllTable.setOnClickListener(btn ->{
-////            changeBgColorTextView(binding.tvTitleAll,getContext().getColor(R.color.red_100));
-////            changeBgColorTextView(binding.tvTitleEmpty,getContext().getColor(R.color.grey_55));
-////            changeBgColorTextView(binding.tvTitleOpen,getContext().getColor(R.color.grey_55));
-////            getAllTable();
-//        });
-//        binding.btnTableEmpty.setOnClickListener(btn ->{
-//            changeBgColorTextView(binding.tvTitleAll,getContext().getColor(R.color.grey_55));
-//            changeBgColorTextView(binding.tvTitleEmpty,getContext().getColor(R.color.red_100));
-//            changeBgColorTextView(binding.tvTitleOpen,getContext().getColor(R.color.grey_55));
-////            getTable("false");
-//        });
-//
-//        binding.btnTableOpen.setOnClickListener(btn ->{
-//            changeBgColorTextView(binding.tvTitleAll,getContext().getColor(R.color.grey_55));
-//            changeBgColorTextView(binding.tvTitleEmpty,getContext().getColor(R.color.grey_55));
-//            changeBgColorTextView(binding.tvTitleOpen,getContext().getColor(R.color.red_100));
-////            getTable("true");
-//
-//        });
-//    }
+    private void selectTabFragment(){
+        binding.btnAllTable.setOnClickListener(btn ->{
+            changeBgColorTextView(binding.tvTitleAll,getContext().getColor(R.color.red_100));
+            changeBgColorTextView(binding.tvTitleEmpty,getContext().getColor(R.color.grey_55));
+            changeBgColorTextView(binding.tvTitleOpen,getContext().getColor(R.color.grey_55));
+            getAllTable();
+        });
+        binding.btnTableEmpty.setOnClickListener(btn ->{
+            changeBgColorTextView(binding.tvTitleAll,getContext().getColor(R.color.grey_55));
+            changeBgColorTextView(binding.tvTitleEmpty,getContext().getColor(R.color.red_100));
+            changeBgColorTextView(binding.tvTitleOpen,getContext().getColor(R.color.grey_55));
+            getTable("false");
+        });
+
+        binding.btnTableOpen.setOnClickListener(btn ->{
+            changeBgColorTextView(binding.tvTitleAll,getContext().getColor(R.color.grey_55));
+            changeBgColorTextView(binding.tvTitleEmpty,getContext().getColor(R.color.grey_55));
+            changeBgColorTextView(binding.tvTitleOpen,getContext().getColor(R.color.red_100));
+           getTable("true");
+
+        });
+    }
 
 
     private void changeBgColorTextView( TextView tv ,int idColor){
         tv.setBackgroundColor(idColor);
     }
 
-//    private void getTable(String statusTable){
-//        database = FirebaseDatabase.getInstance();
-//        DatabaseReference reference = database.getReference("tables");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                listTable.clear();
-//                for (DataSnapshot snapshot1: snapshot.getChildren()) {
-//                    Table table = snapshot1.getValue(Table.class);
-//                    if(table.isHidden() && table.getStatus().equals(statusTable)){
-//                        listTable.add(table);
-//                    }
-//
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//        adapter = new TableAdapter(listTable, HomeFragment.this,getContext());
-//        binding.revListTable.setAdapter(adapter);
-//
-//    }
-//    private void getAllTable(){
-//        database = FirebaseDatabase.getInstance();
-//        DatabaseReference reference = database.getReference("tables");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                listTable.clear();
-//                for (DataSnapshot snapshot1: snapshot.getChildren()) {
-//                    Table table = snapshot1.getValue(Table.class);
-//                    if(table.isHidden()){
-//                        listTable.add(table);
-//                    }
-//
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//        adapter = new TableAdapter(listTable, HomeFragment.this,getContext());
-//        binding.revListTable.setAdapter(adapter);
-//
-//    }
-//
+    private void getTable(String statusTable){
+        listTable = new ArrayList<>();
+        database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("tables");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listTable.clear();
+                for (DataSnapshot snapshot1: snapshot.getChildren()) {
+                    Table table = snapshot1.getValue(Table.class);
+                    if(table.isHidden() && table.getStatus().equals(statusTable)){
+                        listTable.add(table);
+                    }
+
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        adapter = new TableAdapter(listTable, HomeFragment.this,getContext());
+        binding.revListTable.setAdapter(adapter);
+
+    }
+    private void getAllTable(){
+        listTable = new ArrayList<>();
+        database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("tables");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listTable.clear();
+                for (DataSnapshot snapshot1: snapshot.getChildren()) {
+                    Table table = snapshot1.getValue(Table.class);
+                    if(table.isHidden()){
+                        listTable.add(table);
+                    }
+
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        adapter = new TableAdapter(listTable, HomeFragment.this,getContext());
+        binding.revListTable.setAdapter(adapter);
+
+    }
 
 
 
-//    @Override
-//    public void onClick(Table table) {
-//        replaceFragment(DetailTableFragment.newInstance(table));
-//    }
+
+    @Override
+    public void onClick(Table table) {
+        replaceFragment(DetailTableFragment.newInstance(table));
+    }
 
 
 }
