@@ -8,14 +8,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 
+import com.bumptech.glide.Glide;
 import com.example.qlch.R;
 import com.example.qlch.base.BaseFragment;
 import com.example.qlch.base.OnclickOptionMenu;
 import com.example.qlch.databinding.FragmentHomeBinding;
+import com.example.qlch.model.Receipt;
 import com.example.qlch.model.Table;
 import com.example.qlch.model.User;
+import com.example.qlch.setting.DailySalesReportFragment;
+import com.example.qlch.setting.SettingViewModel;
 import com.example.qlch.setting.UpdateUserFragment;
 import com.example.qlch.table.DetailTableFragment;
 import com.example.qlch.table.adapter.TableAdapter;
@@ -26,14 +32,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeFragment extends BaseFragment implements OnclickOptionMenu {  // nho implement onClickk
     // nho implement onClickk
@@ -44,7 +54,7 @@ public class HomeFragment extends BaseFragment implements OnclickOptionMenu {  /
    private User user;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-//    private SettingViewModel viewModel;
+    private SettingViewModel viewModel;
     private TableAdapter adapter = null;
     private FirebaseDatabase database;
     private List<Table> listTable;
@@ -72,8 +82,8 @@ public class HomeFragment extends BaseFragment implements OnclickOptionMenu {  /
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater,container,false);
-//        viewModel = new ViewModelProvider(this).get(SettingViewModel.class);
-//        listTable = new ArrayList<>();
+        viewModel = new ViewModelProvider(this).get(SettingViewModel.class);
+        listTable = new ArrayList<>();
         return binding.getRoot();
 
     }
@@ -84,22 +94,22 @@ public class HomeFragment extends BaseFragment implements OnclickOptionMenu {  /
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-//        StorageReference reference = FirebaseStorage.getInstance().getReference().child("avatars");
-//        reference.listAll().addOnSuccessListener(listResult -> {
-//            for (StorageReference files: listResult.getItems()
-//            ) {
-//                if (files.getName().equals(firebaseUser.getUid())){
-//                    files.getDownloadUrl().addOnSuccessListener(uri -> {
-//                        if(getActivity() != null){
-//                            Glide.with(getActivity()).load(uri).into(binding.icUserSetting);
-//                        }
-//
-//                    });
-//                }
-//            }
-//        }).addOnFailureListener(e -> {
-//
-//        });
+        StorageReference reference = FirebaseStorage.getInstance().getReference().child("avatars");
+        reference.listAll().addOnSuccessListener(listResult -> {
+            for (StorageReference files: listResult.getItems()
+            ) {
+                if (files.getName().equals(firebaseUser.getUid())){
+                    files.getDownloadUrl().addOnSuccessListener(uri -> {
+                        if(getActivity() != null){
+                            Glide.with(getActivity()).load(uri).into(binding.icUserSetting);
+                        }
+
+                    });
+                }
+            }
+        }).addOnFailureListener(e -> {
+
+        });
         listening();
         initObSever();
     }
@@ -127,49 +137,49 @@ public class HomeFragment extends BaseFragment implements OnclickOptionMenu {  /
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String strToday = dateFormat.format(toDay);
 
-//        viewModel.getReceiptByToDay(strToday);
-//        viewModel.getReceiptSavedByToDay(strToday);
-//        viewModel.getReceiptCancelByToDay(strToday);
-//        viewModel.liveDateGetSaveReceiptToDay.observe(getViewLifecycleOwner(), new Observer<List<Receipt>>() {
-//            @Override
-//            public void onChanged(List<Receipt> receipts) {
-//                if(receipts.size() == 0){
-//                    binding.tvOderNew.setText("0");
-//                }else {
-//                    binding.tvOderNew.setText(receipts.size() + "");
-//                }
-//            }
-//        });
+        viewModel.getReceiptByToDay(strToday);
+        viewModel.getReceiptSavedByToDay(strToday);
+        viewModel.getReceiptCancelByToDay(strToday);
+        viewModel.liveDateGetSaveReceiptToDay.observe(getViewLifecycleOwner(), new Observer<List<Receipt>>() {
+            @Override
+            public void onChanged(List<Receipt> receipts) {
+                if(receipts.size() == 0){
+                    binding.tvOderNew.setText("0");
+                }else {
+                    binding.tvOderNew.setText(receipts.size() + "");
+                }
+            }
+        });
 
-//        viewModel.liveDateGetReceiptToDay.observe(getViewLifecycleOwner(), new Observer<List<Receipt>>() {
-//            @Override
-//            public void onChanged(List<Receipt> receipts) {
-//                if(receipts.size() == 0){
-//                    binding.tvBillPaid.setText("0");
-//                }else {
-//                    binding.tvBillPaid.setText(receipts.size() + "");
-//                    Double money = 0.0;
-//                    for (Receipt receipt : receipts) {
-//                        money += receipt.getMoney();
-//                    }
-//                    Locale locale = new Locale("en", "EN");
-//                    NumberFormat numberFormat = NumberFormat.getInstance(locale);
-//                    String strMoney = numberFormat.format(money);
-//                    binding.tvTotalMoneyToDay.setText(strMoney);
-//
-//                }
-//            }
-//        });
-//        viewModel.liveDateGetCancelReceiptToDay.observe(getViewLifecycleOwner(), new Observer<List<Receipt>>() {
-//            @Override
-//            public void onChanged(List<Receipt> receipts) {
-//                if(receipts.size() == 0){
-//                    binding.tvOderCancel.setText("0");
-//                }else {
-//                    binding.tvOderCancel.setText(receipts.size() + "");
-//                }
-//            }
-//        });
+        viewModel.liveDateGetReceiptToDay.observe(getViewLifecycleOwner(), new Observer<List<Receipt>>() {
+            @Override
+            public void onChanged(List<Receipt> receipts) {
+                if(receipts.size() == 0){
+                    binding.tvBillPaid.setText("0");
+                }else {
+                    binding.tvBillPaid.setText(receipts.size() + "");
+                    Double money = 0.0;
+                    for (Receipt receipt : receipts) {
+                        money += receipt.getMoney();
+                    }
+                    Locale locale = new Locale("en", "EN");
+                    NumberFormat numberFormat = NumberFormat.getInstance(locale);
+                    String strMoney = numberFormat.format(money);
+                    binding.tvTotalMoneyToDay.setText(strMoney);
+
+                }
+            }
+        });
+        viewModel.liveDateGetCancelReceiptToDay.observe(getViewLifecycleOwner(), new Observer<List<Receipt>>() {
+            @Override
+            public void onChanged(List<Receipt> receipts) {
+                if(receipts.size() == 0){
+                    binding.tvOderCancel.setText("0");
+                }else {
+                    binding.tvOderCancel.setText(receipts.size() + "");
+                }
+            }
+        });
 
 
     }
@@ -185,7 +195,7 @@ public class HomeFragment extends BaseFragment implements OnclickOptionMenu {  /
             replaceFragment(new UpdateUserFragment().newInstance(user));
         });
         binding.tvShowDetailsTurnover.setOnClickListener(tv ->{
-//            replaceFragment(DailySalesReportFragment.newInstance());
+            replaceFragment(DailySalesReportFragment.newInstance());
         });
     }
 

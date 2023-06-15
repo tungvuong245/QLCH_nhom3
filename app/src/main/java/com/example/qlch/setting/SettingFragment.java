@@ -144,28 +144,28 @@ public class SettingFragment extends BaseFragment {
             signOut(getContext());
         });
 
-//        binding.tvSalesReport.setOnClickListener(v -> {
-//            replaceFragment(DailySalesReportFragment.newInstance());
-//        });
+        binding.tvSalesReport.setOnClickListener(v -> {
+            replaceFragment(DailySalesReportFragment.newInstance());
+        });
 
-//        binding.icSalesReport.setOnClickListener(v -> {
-//            replaceFragment(DailySalesReportFragment.newInstance());
-//        });
-//        binding.icNextSalesReport.setOnClickListener(v -> {
-//            replaceFragment(DailySalesReportFragment.newInstance());
-//        });
-//
-//
-//        binding.tvOrderStatistics.setOnClickListener(v -> {
-//            replaceFragment(StatisticalFragment.newInstance());
-//        });
-//
-//        binding.icOrderStatistics.setOnClickListener(v -> {
-//            replaceFragment(StatisticalFragment.newInstance());
-//        });
-//        binding.icNextOrderStatistics.setOnClickListener(v -> {
-//            replaceFragment(StatisticalFragment.newInstance());
-//        });
+        binding.icSalesReport.setOnClickListener(v -> {
+            replaceFragment(DailySalesReportFragment.newInstance());
+        });
+        binding.icNextSalesReport.setOnClickListener(v -> {
+            replaceFragment(DailySalesReportFragment.newInstance());
+        });
+
+
+        binding.tvOrderStatistics.setOnClickListener(v -> {
+            replaceFragment(StatisticalFragment.newInstance());
+        });
+
+        binding.icOrderStatistics.setOnClickListener(v -> {
+            replaceFragment(StatisticalFragment.newInstance());
+        });
+        binding.icNextOrderStatistics.setOnClickListener(v -> {
+            replaceFragment(StatisticalFragment.newInstance());
+        });
 
 
 

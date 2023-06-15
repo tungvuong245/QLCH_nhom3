@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.qlch.databinding.ActivityMainBinding;
 import com.example.qlch.home.HomeFragment;
+import com.example.qlch.maket.MarketFragment;
 import com.example.qlch.product.ProductFragment;
 import com.example.qlch.setting.SettingFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
                         window.setStatusBarColor(getColor(R.color.white));
                         break;
                     case R.id.maket_fragment:
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.fade_control, MarketFragment.newInstance()).commit();
-//                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//                        window.setStatusBarColor(getColor(R.color.white));
-//                        break;
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fade_control, MarketFragment.newInstance()).commit();
+                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                        window.setStatusBarColor(getColor(R.color.white));
+                        break;
                     case R.id.menu_fragment:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fade_control, ProductFragment.newInstance()).commit();
                         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
